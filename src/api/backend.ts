@@ -374,3 +374,13 @@ export async function applyRestore(backup: unknown, passphrase: string, setup: b
 }
 
 export default backend;
+
+// ── Instapaper (fork) ───────────────────────────────────────────────
+export async function getInstapaperStatus(): Promise<boolean> {
+  const { data } = await backend.get<{ enabled: boolean }>('/instapaper/status');
+  return !!data.enabled;
+}
+
+export async function saveToInstapaper(url: string, title?: string): Promise<void> {
+  await backend.post('/instapaper/add', { url, title });
+}

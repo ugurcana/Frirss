@@ -193,6 +193,8 @@
     "videoOpen": "Abrir en YouTube",
     "videoOffline": "Vídeo no disponible sin conexión",
     "share": "Compartir",
+    "saveToInstapaper": "Guardar en Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "Copiar enlace",
     "extractUnavailable": "Artículo completo no disponible: se muestra el contenido del feed."
   },
@@ -437,6 +439,7 @@
       "lastArticle": "Último artículo",
       "toggleRead": "Alternar leído",
       "refresh": "Actualizar fuentes",
+      "saveToInstapaper": "Guardar en Instapaper",
       "keySpace": "Espacio",
       "keyEscape": "Esc",
       "keyEnter": "Intro",
@@ -655,6 +658,7 @@
         "translate": "Traducir",
         "original": "Original",
         "share": "Compartir",
+        "instapaper": "Guardar en Instapaper",
         "focus": "Modo Enfoque (ancho completo)",
         "fontSize": "Tamaño del texto (A− / A+)"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} artículos marcados como leídos",
     "markedReadAll": "Artículos marcados como leídos",
     "linkCopied": "Enlace copiado",
+    "instapaperSaved": "Guardado en Instapaper",
+    "instapaperFailed": "No se pudo guardar en Instapaper. Inténtalo de nuevo.",
+    "instapaperBadCredentials": "Instapaper rechaza la cuenta configurada en el servidor (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "No se pudo copiar el enlace",
     "loadMoreEmpty": "Página siguiente cargada, todavía no hay nada que mostrar.",
     "markFailed": "El servidor rechazó marcar este artículo: se ha restaurado su fila.",

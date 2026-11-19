@@ -35,6 +35,8 @@ vi.mock('../api/feeds', () => ({
   renameTag: vi.fn(), deleteTag: vi.fn(), clearWriteToken: vi.fn(), itemIdsNewerThanEntry: vi.fn(async () => []),
 }));
 vi.mock('../api/backend', () => ({ startActualize: vi.fn(), getActualizeStatus: vi.fn(), getAiConfig: vi.fn(), requestAiSummary: vi.fn() }));
+// Fork: Instapaper configured, so its button and command exist.
+vi.mock('./instapaper', () => ({ useInstapaperEnabled: () => true, saveArticleToInstapaper: vi.fn() }));
 vi.mock('../hooks/useBreakpoint', () => ({ useBreakpoint: () => 'desktop', useRawBreakpoint: () => 'desktop' }));
 // La palette ne propose Résumer / Traduire que si le volet le ferait : on le suppose.
 vi.mock('./aiTranslateProbe', async (orig) => ({

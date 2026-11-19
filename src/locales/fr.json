@@ -193,6 +193,8 @@
     "videoOpen": "Ouvrir sur YouTube",
     "videoOffline": "Vidéo indisponible hors ligne",
     "share": "Partager",
+    "saveToInstapaper": "Enregistrer dans Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "Copier le lien",
     "extractUnavailable": "Article complet indisponible : voici le contenu du flux."
   },
@@ -437,6 +439,7 @@
       "lastArticle": "Dernier article",
       "toggleRead": "Basculer lu / non lu",
       "refresh": "Actualiser les flux",
+      "saveToInstapaper": "Enregistrer dans Instapaper",
       "keySpace": "Espace",
       "keyEscape": "Échap",
       "keyEnter": "Entrée",
@@ -655,6 +658,7 @@
         "translate": "Traduire",
         "original": "Original",
         "share": "Partager",
+        "instapaper": "Enregistrer dans Instapaper",
         "focus": "Mode Focus (pleine largeur)",
         "fontSize": "Taille du texte (A− / A+)"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} articles marqués comme lus",
     "markedReadAll": "Articles marqués comme lus",
     "linkCopied": "Lien copié",
+    "instapaperSaved": "Enregistré dans Instapaper",
+    "instapaperFailed": "Impossible d’enregistrer dans Instapaper. Réessayez.",
+    "instapaperBadCredentials": "Instapaper refuse le compte réglé sur le serveur (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "Impossible de copier le lien",
     "loadMoreEmpty": "Page suivante chargée, toujours rien à afficher.",
     "markFailed": "Le serveur a refusé de marquer cet article : sa ligne a été remise.",

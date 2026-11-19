@@ -23,10 +23,10 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe('LayoutTab — barres sur ordinateur', () => {
-  it('un interrupteur par élément du registre : 11 pour la liste, 12 pour le volet', () => {
+  it('un interrupteur par élément du registre : 11 pour la liste, 13 pour le volet (fork : Instapaper)', () => {
     const c = render(<LayoutTab />);
     expect(itemSwitches(c, 'list')).toHaveLength(11);
-    expect(itemSwitches(c, 'reading')).toHaveLength(12);
+    expect(itemSwitches(c, 'reading')).toHaveLength(13);
   });
 
   it('un interrupteur masque son élément', () => {

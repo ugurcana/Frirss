@@ -193,6 +193,8 @@
     "videoOpen": "Openen op YouTube",
     "videoOffline": "Video offline niet beschikbaar",
     "share": "Delen",
+    "saveToInstapaper": "Opslaan in Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "Link kopiëren",
     "extractUnavailable": "Volledig artikel niet beschikbaar: dit is de inhoud van de feed."
   },
@@ -437,6 +439,7 @@
       "lastArticle": "Laatste artikel",
       "toggleRead": "Gelezen wisselen",
       "refresh": "Feeds vernieuwen",
+      "saveToInstapaper": "Opslaan in Instapaper",
       "keySpace": "Spatie",
       "keyEscape": "Esc",
       "keyEnter": "Enter",
@@ -655,6 +658,7 @@
         "translate": "Vertalen",
         "original": "Origineel",
         "share": "Delen",
+        "instapaper": "Opslaan in Instapaper",
         "focus": "Focusmodus (volledige breedte)",
         "fontSize": "Tekstgrootte (A− / A+)"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} artikelen als gelezen gemarkeerd",
     "markedReadAll": "Artikelen als gelezen gemarkeerd",
     "linkCopied": "Link gekopieerd",
+    "instapaperSaved": "Opgeslagen in Instapaper",
+    "instapaperFailed": "Opslaan in Instapaper mislukt. Probeer het opnieuw.",
+    "instapaperBadCredentials": "Instapaper weigert het account dat op de server is ingesteld (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "Kon de link niet kopiëren",
     "loadMoreEmpty": "Volgende pagina geladen, nog steeds niets om te tonen.",
     "markFailed": "De server weigerde dit artikel te markeren: de rij is teruggezet.",

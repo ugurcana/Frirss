@@ -193,6 +193,8 @@
     "videoOpen": "Open on YouTube",
     "videoOffline": "Video unavailable offline",
     "share": "Share",
+    "saveToInstapaper": "Save to Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "Copy link",
     "extractUnavailable": "Full article unavailable: showing the feed content."
   },
@@ -437,6 +439,7 @@
       "lastArticle": "Last article",
       "toggleRead": "Toggle read",
       "refresh": "Refresh feeds",
+      "saveToInstapaper": "Save to Instapaper",
       "keySpace": "Space",
       "keyEscape": "Esc",
       "keyEnter": "Enter",
@@ -655,6 +658,7 @@
         "translate": "Translate",
         "original": "Original",
         "share": "Share",
+        "instapaper": "Save to Instapaper",
         "focus": "Focus mode (full width)",
         "fontSize": "Text size (A− / A+)"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} articles marked read",
     "markedReadAll": "Articles marked read",
     "linkCopied": "Link copied",
+    "instapaperSaved": "Saved to Instapaper",
+    "instapaperFailed": "Couldn’t save to Instapaper. Try again.",
+    "instapaperBadCredentials": "Instapaper refused the account set on the server (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "Could not copy the link",
     "loadMoreEmpty": "Next page loaded, still nothing to show.",
     "markFailed": "The server refused to mark this article: its row has been put back.",

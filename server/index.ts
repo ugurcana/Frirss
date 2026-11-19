@@ -12,6 +12,7 @@ import adminRoutes from './routes/admin.js';
 import proxyRoutes from './routes/proxy.js';
 import extractRoutes from './routes/extract.js';
 import aiRoutes from './routes/ai.js';
+import instapaperRoutes from './routes/instapaper.js';
 import adminAiRoutes from './routes/adminAi.js';
 import { adminBackupRouter, setupBackupRouter, RESTORE_PATH } from './routes/backup.js';
 import { migrateEncryptTokens } from './crypto.js';
@@ -81,6 +82,7 @@ app.use('/api/setup', setupBackupRouter);
 app.use('/api/proxy', proxyRoutes);
 app.use('/api/extract', extractRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/instapaper', instapaperRoutes);
 app.use('/api/admin', adminAiRoutes);
 
 // ── Health check ────────────────────────────────────────────────────

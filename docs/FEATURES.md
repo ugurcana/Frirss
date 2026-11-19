@@ -9986,6 +9986,8 @@ qu'un terme n'est pas déjà pris avant de le réutiliser.
 | Méthode | Route | Rôle |
 |---------|-------|------|
 | GET | `/api/health` | Santé : version, base, uptime (HEALTHCHECK du Dockerfile ; `server/index.ts`, hors `server/routes/`) |
+| GET | `/api/instapaper/status` | Fork : Instapaper est-il configuré sur le serveur ? (`{ enabled }`) |
+| POST | `/api/instapaper/add` | Fork : enregistrer une URL dans Instapaper (API simple, compte du serveur) |
 | POST | `/api/auth/register` | Créer un compte |
 | POST | `/api/auth/login` | Ouvrir une session |
 | POST | `/api/auth/logout` | Fermer la session |
@@ -10063,6 +10065,10 @@ fichiers statiques et `trust proxy`) · `PORT` (port interne d'Express, 3001) ·
 **Cache et relève** — `REDIS_URL` · `CACHE_ARTICLES_PER_FEED` · `CACHE_TTL` ·
 `CACHE_SYNC_INTERVAL` · `CACHE_SYNC_ACTIVE_DAYS` · `CACHE_SYNC_PARALLEL_USERS` ·
 `FRIRSS_REFRESH_MAX_FEEDS`
+
+**Instapaper (fork)** — `INSTAPAPER_USERNAME` · `INSTAPAPER_PASSWORD` : le
+compte Instapaper de l'instance. Sans `INSTAPAPER_USERNAME`, le bouton
+« Enregistrer dans Instapaper » reste masqué.
 
 > `FRIRSS_DEV_VERSION` n'est pas un réglage d'exécution : elle est lue **à la
 > construction** par Vite (voir « Versions et livraison »).

@@ -12,9 +12,9 @@ const allHidden = (): ToolbarVisibility =>
   Object.fromEntries(Object.keys(DEFAULT_TOOLBAR_VISIBILITY).map((k) => [k, false])) as unknown as ToolbarVisibility;
 
 describe('registre des éléments masquables', () => {
-  it('11 éléments dans la barre de la liste, 12 dans le volet, ids uniques', () => {
+  it('11 éléments dans la barre de la liste, 13 dans le volet (fork : Instapaper), ids uniques', () => {
     expect(TOOLBAR_ITEMS.filter((i) => i.zone === 'list')).toHaveLength(11);
-    expect(TOOLBAR_ITEMS.filter((i) => i.zone === 'reading')).toHaveLength(12);
+    expect(TOOLBAR_ITEMS.filter((i) => i.zone === 'reading')).toHaveLength(13);
     expect(new Set(TOOLBAR_ITEMS.map((i) => i.id)).size).toBe(TOOLBAR_ITEMS.length);
   });
 

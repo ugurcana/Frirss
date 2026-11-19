@@ -41,6 +41,7 @@ export const TOOLBAR_ITEMS = [
   { id: 'translate', zone: 'reading' },
   { id: 'original', zone: 'reading' },
   { id: 'share', zone: 'reading' },
+  { id: 'instapaper', zone: 'reading' },
   { id: 'focus', zone: 'reading' },
   { id: 'fontSize', zone: 'reading' },
 ] as const satisfies readonly { id: string; zone: ToolbarZone }[];

@@ -11,7 +11,7 @@ import {
 } from '../lib/feedJumps';
 
 // Actions qui ne sont pas idempotentes : les rejouer défait ou multiplie.
-const TOGGLE_ACTIONS = ['toggleStar', 'readLater', 'toggleSidebar', 'openOriginal', 'toggleRead', 'refresh'];
+const TOGGLE_ACTIONS = ['toggleStar', 'readLater', 'toggleSidebar', 'openOriginal', 'toggleRead', 'refresh', 'saveToInstapaper'];
 
 /**
  * FreshRSS modifiers: on the navigation keys, Shift moves between feeds and
@@ -188,6 +188,10 @@ export function useKeyboardNav(): void {
       } else if (key === shortcuts.refresh) {
         e.preventDefault();
         void store.refresh();
+      } else if (key === shortcuts.saveToInstapaper) {
+        e.preventDefault();
+        // The reading pane's command: it knows whether Instapaper is set up.
+        runToolbarCommand('instapaper');
       } else if (key === shortcuts.openArticle) {
         e.preventDefault();
         if (!store.selectedArticle) {

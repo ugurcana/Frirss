@@ -201,6 +201,8 @@
     "videoOpen": "Відкрити на YouTube",
     "videoOffline": "Відео недоступне офлайн",
     "share": "Поділитися",
+    "saveToInstapaper": "Зберегти в Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "Копіювати посилання",
     "extractUnavailable": "Повна стаття недоступна: показано вміст стрічки."
   },
@@ -447,6 +449,7 @@
       "lastArticle": "Остання стаття",
       "toggleRead": "Перемкнути прочитане",
       "refresh": "Оновити стрічки",
+      "saveToInstapaper": "Зберегти в Instapaper",
       "keySpace": "Пробіл",
       "keyEscape": "Esc",
       "keyEnter": "Enter",
@@ -685,6 +688,7 @@
         "translate": "Перекласти",
         "original": "Оригінал",
         "share": "Поділитися",
+        "instapaper": "Зберегти в Instapaper",
         "focus": "Режим фокусування (на всю ширину)",
         "fontSize": "Розмір тексту (A− / A+)"
       }
@@ -967,6 +971,9 @@
     "markedRead_other": "{{count}} статей позначено прочитаними",
     "markedReadAll": "Статті позначено прочитаними",
     "linkCopied": "Посилання скопійовано",
+    "instapaperSaved": "Збережено в Instapaper",
+    "instapaperFailed": "Не вдалося зберегти в Instapaper. Спробуйте ще раз.",
+    "instapaperBadCredentials": "Instapaper відхиляє обліковий запис, заданий на сервері (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "Не вдалося скопіювати посилання",
     "loadMoreEmpty": "Наступну сторінку завантажено, показувати поки нічого.",
     "markFailed": "Сервер відмовився позначити цю статтю: рядок повернено на місце.",

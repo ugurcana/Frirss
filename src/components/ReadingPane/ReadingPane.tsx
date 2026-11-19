@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { keyLabel } from '../../lib/keyLabel';
 import { createPortal, flushSync } from 'react-dom';
 import { canTakeReaderFocus } from '../../lib/readerFocus';
+import { useInstapaperEnabled, saveArticleToInstapaper } from '../../lib/instapaper';
 import { useFeedStore, READ_LATER_LABEL } from '../../stores/feedStore';
 import { useThemeStore } from '../../stores/themeStore';
 import { useUiStore } from '../../stores/uiStore';
@@ -200,6 +201,16 @@ export default function ReadingPane({ showBack }: ReadingPaneProps) {
       if (err instanceof DOMException && err.name === 'AbortError') return;
       pushToast(t('toast.copyFailed'), { tone: 'error' });
     }
+  }, [pushToast, t]);
+
+  // Fork: "Save to Instapaper" (the account lives on the server).
+  const instapaperOn = useInstapaperEnabled();
+  const saveToInstapaper = useCallback(async (article: Article) => {
+    if (!article.url) return;
+    const outcome = await saveArticleToInstapaper(article.url, articleTitle(article, t));
+    if (outcome === 'saved') pushToast(t('toast.instapaperSaved'));
+    else if (outcome === 'badCredentials') pushToast(t('toast.instapaperBadCredentials'), { tone: 'error' });
+    else if (outcome === 'failed') pushToast(t('toast.instapaperFailed'), { tone: 'error' });
   }, [pushToast, t]);
 
   // Full content extraction state
@@ -1419,10 +1430,11 @@ export default function ReadingPane({ showBack }: ReadingPaneProps) {
   const showTranslateBtn = aiUsable && shown('translate');
   const showOriginalBtn = !!safeHref(selectedArticle?.url) && shown('original');
   const showShareBtn = !!selectedArticle?.url && shown('share');
+  const showInstapaperBtn = instapaperOn && !!safeHref(selectedArticle?.url) && shown('instapaper');
   const showFocusBtn = shown('focus');
   const showFontBtn = shown('fontSize');
   const markGroup = showReadBtn || showStarBtn || showReadLaterBtn;
-  const toolGroup = showFullBtn || showSummarizeBtn || showTranslateBtn || showOriginalBtn || showShareBtn;
+  const toolGroup = showFullBtn || showSummarizeBtn || showTranslateBtn || showOriginalBtn || showShareBtn || showInstapaperBtn;
   const [, sepLabels, sepTools] = separatorsBefore([markGroup, showLabelsBtn, toolGroup]);
   const readingBarEmpty = !showBackBtn && !markGroup && !showLabelsBtn && !toolGroup && !showFocusBtn && !showFontBtn;
   // ☰ de secours (L-10, relecture 1.9.0). En 2 colonnes et en grille,
@@ -1468,6 +1480,7 @@ export default function ReadingPane({ showBack }: ReadingPaneProps) {
     if (showTranslatedBody) offers.push({ command: 'showSource', item: 'translate', label: t('ai.showSource') });
     if (safeHref(a.url)) offers.push({ command: 'original', item: 'original', label: t('preferences.shortcuts.openOriginal') });
     if (a.url) offers.push({ command: 'share', item: 'share', label: canNativeShare ? t('readingPane.share') : t('readingPane.copyLink') });
+    if (instapaperOn && safeHref(a.url)) offers.push({ command: 'instapaper', item: 'instapaper', label: t('readingPane.saveToInstapaper') });
     if (fontVal > fontMin) offers.push({ command: 'fontDown', item: 'fontSize', label: t('sidebar.reduceText') });
     if (fontVal < fontMax) offers.push({ command: 'fontUp', item: 'fontSize', label: t('sidebar.enlargeText') });
     return offers;
@@ -1488,6 +1501,7 @@ export default function ReadingPane({ showBack }: ReadingPaneProps) {
     // La même ouverture que la touche O (`openExternal`, REG-027), pas une copie.
     else if (command === 'original') openExternal(a.url);
     else if (command === 'share') void shareArticle(a);
+    else if (command === 'instapaper') void saveToInstapaper(a);
     else if (command === 'fontDown') decFont();
     else if (command === 'fontUp') incFont();
   });
@@ -1905,6 +1919,22 @@ export default function ReadingPane({ showBack }: ReadingPaneProps) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
             </svg>
             <span className="toolbar-label toolbar-label-secondary">{canNativeShare ? t('readingPane.share') : t('readingPane.copyLink')}</span>
+          </button>
+        )}
+
+        {/* Fork: Save to Instapaper */}
+        {showInstapaperBtn && (
+          <button
+            onClick={() => void saveToInstapaper(article)}
+            className="action-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200"
+            style={{ color: 'var(--reading-meta)', border: '1.5px solid transparent' }}
+            title={t('readingPane.saveToInstapaper')}
+            aria-label={t('readingPane.saveToInstapaper')}
+          >
+            <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
+            </svg>
+            <span className="toolbar-label toolbar-label-secondary">{t('readingPane.instapaper')}</span>
           </button>
         )}
 

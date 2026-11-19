@@ -113,6 +113,7 @@ const defaultShortcuts: Shortcuts = {
   lastArticle: '',
   toggleRead: '',
   refresh: '',
+  saveToInstapaper: '',
 };
 
 /**
@@ -1435,7 +1436,7 @@ export const shortcutActions = [
   'nextArticle', 'prevArticle', 'openArticle',
   'markRead', 'markUnread', 'toggleStar',
   'openOriginal', 'toggleSidebar', 'search', 'readLater', 'summarize', 'translate',
-  'nextUnread', 'firstArticle', 'lastArticle', 'toggleRead', 'refresh',
+  'nextUnread', 'firstArticle', 'lastArticle', 'toggleRead', 'refresh', 'saveToInstapaper',
 ];
 
 // For the shortcut footer — only show contextual shortcuts

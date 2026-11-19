@@ -193,6 +193,8 @@
     "videoOpen": "Apri su YouTube",
     "videoOffline": "Video non disponibile offline",
     "share": "Condividi",
+    "saveToInstapaper": "Salva su Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "Copia link",
     "extractUnavailable": "Articolo completo non disponibile: ecco il contenuto del feed."
   },
@@ -437,6 +439,7 @@
       "lastArticle": "Ultimo articolo",
       "toggleRead": "Attiva/disattiva letto",
       "refresh": "Aggiorna i feed",
+      "saveToInstapaper": "Salva su Instapaper",
       "keySpace": "Spazio",
       "keyEscape": "Esc",
       "keyEnter": "Invio",
@@ -655,6 +658,7 @@
         "translate": "Traduci",
         "original": "Originale",
         "share": "Condividi",
+        "instapaper": "Salva su Instapaper",
         "focus": "Modalità Focus (larghezza piena)",
         "fontSize": "Dimensione del testo (A− / A+)"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} articoli segnati come letti",
     "markedReadAll": "Articoli segnati come letti",
     "linkCopied": "Link copiato",
+    "instapaperSaved": "Salvato su Instapaper",
+    "instapaperFailed": "Impossibile salvare su Instapaper. Riprova.",
+    "instapaperBadCredentials": "Instapaper rifiuta l’account impostato sul server (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "Impossibile copiare il link",
     "loadMoreEmpty": "Pagina successiva caricata, ancora nulla da mostrare.",
     "markFailed": "Il server ha rifiutato di segnare questo articolo: la riga è stata ripristinata.",

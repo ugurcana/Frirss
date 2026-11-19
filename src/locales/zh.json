@@ -193,6 +193,8 @@
     "videoOpen": "在 YouTube 中打开",
     "videoOffline": "离线时视频不可用",
     "share": "分享",
+    "saveToInstapaper": "保存到 Instapaper",
+    "instapaper": "Instapaper",
     "copyLink": "复制链接",
     "extractUnavailable": "无法获取全文：显示订阅源中的内容。"
   },
@@ -437,6 +439,7 @@
       "lastArticle": "最后一篇文章",
       "toggleRead": "切换已读",
       "refresh": "刷新订阅源",
+      "saveToInstapaper": "保存到 Instapaper",
       "keySpace": "空格",
       "keyEscape": "Esc",
       "keyEnter": "回车",
@@ -655,6 +658,7 @@
         "translate": "翻译",
         "original": "原文",
         "share": "分享",
+        "instapaper": "保存到 Instapaper",
         "focus": "专注模式（全宽）",
         "fontSize": "文字大小（A− / A+）"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} 篇文章已标为已读",
     "markedReadAll": "全部文章已标为已读",
     "linkCopied": "链接已复制",
+    "instapaperSaved": "已保存到 Instapaper",
+    "instapaperFailed": "无法保存到 Instapaper，请重试。",
+    "instapaperBadCredentials": "Instapaper 拒绝了服务器上设置的账户（INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD）。",
     "copyFailed": "无法复制链接",
     "loadMoreEmpty": "下一页已加载，但仍无内容。",
     "markFailed": "服务器拒绝标记该文章，已重新放回列表。",

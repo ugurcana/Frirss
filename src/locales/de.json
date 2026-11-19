@@ -193,6 +193,8 @@
     "videoOpen": "Auf YouTube öffnen",
     "videoOffline": "Video offline nicht verfügbar",
     "share": "Teilen",
+    "saveToInstapaper": "In Instapaper speichern",
+    "instapaper": "Instapaper",
     "copyLink": "Link kopieren",
     "extractUnavailable": "Vollständiger Artikel nicht verfügbar: Hier ist der Feed-Inhalt."
   },
@@ -437,6 +439,7 @@
       "lastArticle": "Letzter Artikel",
       "toggleRead": "Gelesen umschalten",
       "refresh": "Feeds aktualisieren",
+      "saveToInstapaper": "In Instapaper speichern",
       "keySpace": "Leertaste",
       "keyEscape": "Esc",
       "keyEnter": "Eingabe",
@@ -655,6 +658,7 @@
         "translate": "Übersetzen",
         "original": "Original",
         "share": "Teilen",
+        "instapaper": "In Instapaper speichern",
         "focus": "Fokusmodus (volle Breite)",
         "fontSize": "Textgröße (A− / A+)"
       }
@@ -923,6 +927,9 @@
     "markedRead_other": "{{count}} Artikel als gelesen markiert",
     "markedReadAll": "Artikel als gelesen markiert",
     "linkCopied": "Link kopiert",
+    "instapaperSaved": "In Instapaper gespeichert",
+    "instapaperFailed": "Speichern in Instapaper fehlgeschlagen. Bitte erneut versuchen.",
+    "instapaperBadCredentials": "Instapaper lehnt das auf dem Server eingestellte Konto ab (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
     "copyFailed": "Link konnte nicht kopiert werden",
     "loadMoreEmpty": "Nächste Seite geladen, noch immer nichts anzuzeigen.",
     "markFailed": "Der Server hat das Markieren abgelehnt: Der Eintrag wurde wiederhergestellt.",
