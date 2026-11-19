@@ -39,6 +39,7 @@ import { useAuthStore } from './authStore';
 import { jwtUserId } from '../lib/jwtUserId';
 import { isBackendAuthFailure } from '../lib/loginErrors';
 import { useUiStore, isUnreadOnly } from './uiStore';
+import { sidebarCategories, viewKind, nextAfterMarkAll } from '../lib/feedNavigation';
 import { effectiveOrder, type ArticleOrder } from '../lib/effectiveOrder';
 import { effectiveAutoExtract } from '../lib/effectiveAutoExtract';
 import { worthAutoExtracting } from '../lib/extractFailures';
@@ -2957,6 +2958,19 @@ export const useFeedStore = create<FeedState>()((set, get) => ({
         // la remise en non lus, qui se fait par lots successifs.
         avant ? { action: { label: i18n.t('toast.undo'), run: () => (memeContexte() ? restoreUnread(avant, toastId) : undefined) } } : undefined,
       );
+      // FreshRSS `onread_jump_next`: a feed or a category marked read moves on
+      // to the next one with unread articles (nothing left: home). Only from
+      // the view that was marked, still on screen, and not from a search.
+      if (vueActive && !searching && memeVue() && useUiStore.getState().jumpNextAfterMarkAll) {
+        const ui = useUiStore.getState();
+        const cats = sidebarCategories(get().subscriptions, ui.categoryOrder, ui.feedOrder, '');
+        if (viewKind(cats, selectedFeed?.id)) {
+          const target = nextAfterMarkAll(cats, selectedFeed?.id, get().unreadCounts);
+          if (!target) get().selectHomeAll();
+          else if (target.kind === 'feed') get().selectView(target.feed);
+          else get().selectCategory({ id: target.category.id, label: target.category.label });
+        }
+      }
     } catch { /* ignore */ } finally {
       endBulk();
     }

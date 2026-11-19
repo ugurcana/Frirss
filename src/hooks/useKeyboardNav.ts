@@ -5,9 +5,49 @@ import { useUiStore } from '../stores/uiStore';
 import { effectiveLayout } from '../lib/effectiveLayout';
 import { useAuthStore } from '../stores/authStore';
 import { openExternal } from '../lib/openExternal';
+import { runToolbarCommand } from '../lib/toolbarCommands';
+import {
+  goToAdjacentCategory, goToAdjacentFeed, goToEdgeCategory, goToEdgeFeed, nextArticleOrFeed, prevArticleOrFeed,
+} from '../lib/feedJumps';
 
 // Actions qui ne sont pas idempotentes : les rejouer défait ou multiplie.
-const TOGGLE_ACTIONS = ['toggleStar', 'readLater', 'toggleSidebar', 'openOriginal'];
+const TOGGLE_ACTIONS = ['toggleStar', 'readLater', 'toggleSidebar', 'openOriginal', 'toggleRead', 'refresh'];
+
+/**
+ * FreshRSS modifiers: on the navigation keys, Shift moves between feeds and
+ * Alt between categories; on "read", Shift marks the whole view read and Alt
+ * the articles above the current one.
+ */
+const MODIFIER_ACTIONS = ['nextArticle', 'prevArticle', 'nextUnread', 'firstArticle', 'lastArticle', 'toggleRead', 'markRead'];
+
+/** The key without its modifier: Shift+J is `j`; Alt+J is `j` even where Alt types `∆`. */
+function baseKey(e: KeyboardEvent): string {
+  const plain = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  if (e.altKey && e.key.length === 1 && !/^[a-z0-9]$/.test(plain)) {
+    const m = /^Key([A-Z])$/.exec(e.code) ?? /^Digit([0-9])$/.exec(e.code);
+    if (m) return m[1].toLowerCase();
+  }
+  return plain;
+}
+
+function runModified(action: string, scope: 'feed' | 'category'): void {
+  const feed = scope === 'feed';
+  switch (action) {
+    case 'nextArticle': if (feed) goToAdjacentFeed(1); else goToAdjacentCategory(1); break;
+    case 'prevArticle': if (feed) goToAdjacentFeed(-1); else goToAdjacentCategory(-1); break;
+    case 'nextUnread': if (feed) goToAdjacentFeed(1, true); else goToAdjacentCategory(1, true); break;
+    case 'firstArticle': if (feed) goToEdgeFeed('first'); else goToEdgeCategory('first'); break;
+    case 'lastArticle': if (feed) goToEdgeFeed('last'); else goToEdgeCategory('last'); break;
+    case 'toggleRead':
+    case 'markRead': {
+      // Shift: the toolbar's "Mark all as read", confirmation included.
+      if (feed) { runToolbarCommand('markAllRead'); break; }
+      const store = useFeedStore.getState();
+      if (store.selectedArticle) void store.markReadRelative(store.selectedArticle, 'above');
+      break;
+    }
+  }
+}
 
 export function useKeyboardNav(): void {
   const shortcuts = useUiStore((s) => s.shortcuts);
@@ -87,9 +127,27 @@ export function useKeyboardNav(): void {
       // Une touche tenue avec ⌘, Ctrl ou Alt appartient au navigateur ou au
       // système (⌘R recharge, Ctrl+L va à la barre d'adresse…) : on la laisse
       // passer sans `preventDefault`. Seul ⌘K, plus haut, fait exception.
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.metaKey || e.ctrlKey) return;
+      // FreshRSS leaves Alt+Shift alone too.
+      if (e.altKey && e.shiftKey) return;
 
       const key = e.key;
+
+      // Shift / Alt on a FreshRSS navigation key. A key bound as typed with
+      // Shift (`J` given to an action of its own) keeps its own action.
+      if (e.altKey || e.shiftKey) {
+        const base = baseKey(e);
+        const ownsTyped = e.shiftKey && key !== base && Object.values(shortcuts).includes(key);
+        const action = ownsTyped ? undefined : MODIFIER_ACTIONS.find((a) => shortcuts[a] && shortcuts[a] === base);
+        if (action) {
+          e.preventDefault();
+          if (e.repeat && (action === 'toggleRead' || action === 'markRead')) return;
+          runModified(action, e.altKey ? 'category' : 'feed');
+          return;
+        }
+        // Alt + anything else belongs to the browser or the system.
+        if (e.altKey) return;
+      }
 
       // Aide-mémoire des raccourcis. Placé avant les raccourcis configurables :
       // `?` n'est pas réassignable, et le laisser en dernier permettrait de le
@@ -110,10 +168,26 @@ export function useKeyboardNav(): void {
 
       if (key === shortcuts.nextArticle) {
         e.preventDefault();
-        store.selectNextArticle();
+        // FreshRSS `j`: past the last article, on to the next feed.
+        void nextArticleOrFeed();
       } else if (key === shortcuts.prevArticle) {
         e.preventDefault();
-        store.selectPrevArticle();
+        prevArticleOrFeed();
+      } else if (key === shortcuts.nextUnread) {
+        e.preventDefault();
+        void nextArticleOrFeed(true);
+      } else if (key === shortcuts.firstArticle) {
+        e.preventDefault();
+        if (store.articles.length) store.selectArticle(store.articles[0]);
+      } else if (key === shortcuts.lastArticle) {
+        e.preventDefault();
+        if (store.articles.length) store.selectArticle(store.articles[store.articles.length - 1]);
+      } else if (key === shortcuts.toggleRead) {
+        e.preventDefault();
+        if (store.selectedArticle) store.toggleRead(store.selectedArticle);
+      } else if (key === shortcuts.refresh) {
+        e.preventDefault();
+        void store.refresh();
       } else if (key === shortcuts.openArticle) {
         e.preventDefault();
         if (!store.selectedArticle) {

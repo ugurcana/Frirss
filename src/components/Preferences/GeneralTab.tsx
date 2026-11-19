@@ -15,6 +15,8 @@ export default function GeneralTab() {
   const { t, i18n } = useTranslation();
   const confirmMarkAllRead = useUiStore((s) => s.confirmMarkAllRead);
   const setConfirmMarkAllRead = useUiStore((s) => s.setConfirmMarkAllRead);
+  const jumpNextAfterMarkAll = useUiStore((s) => s.jumpNextAfterMarkAll);
+  const setJumpNextAfterMarkAll = useUiStore((s) => s.setJumpNextAfterMarkAll);
   const markReadOnScroll = useUiStore((s) => s.markReadOnScroll);
   const setMarkReadOnScroll = useUiStore((s) => s.setMarkReadOnScroll);
   const showNewArticlesPill = useUiStore((s) => s.showNewArticlesPill);
@@ -94,6 +96,23 @@ export default function GeneralTab() {
               checked={confirmMarkAllRead}
               onChange={setConfirmMarkAllRead}
               ariaLabel={t('preferences.general.confirmMarkAllRead')}
+            />
+          </span>
+        </div>
+
+        {/* After "Mark all as read", open the next feed or category with unread */}
+        <div className="flex items-start justify-between gap-4 select-none mt-4">
+          <span className="text-xs" style={{ color: 'var(--list-summary)' }}>
+            {t('preferences.general.jumpNextAfterMarkAll')}
+            <span className="block text-[11px] opacity-70 mt-0.5">
+              {t('preferences.general.jumpNextAfterMarkAllHint')}
+            </span>
+          </span>
+          <span className="mt-0.5">
+            <ToggleSwitch
+              checked={jumpNextAfterMarkAll}
+              onChange={setJumpNextAfterMarkAll}
+              ariaLabel={t('preferences.general.jumpNextAfterMarkAll')}
             />
           </span>
         </div>

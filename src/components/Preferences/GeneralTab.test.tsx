@@ -62,7 +62,7 @@ describe('GeneralTab — éditeur de raccourcis', () => {
     return button;
   }
 
-  it.each(['F5', 'F12', 'Tab', ' ', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', '/', "'", '?'])(
+  it.each(['F5', 'F12', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', '/', "'", '?'])(
     'refuses %j, keeps the shortcut and says why',
     (key) => {
       const { getByText, queryByText } = render(<GeneralTab />);
@@ -122,7 +122,9 @@ describe('GeneralTab — a shortcut without a key', () => {
     const before = useUiStore.getState().shortcuts;
     useUiStore.setState({ shortcuts: { ...before, summarize: '' } });
     const { getAllByText } = render(<GeneralTab />);
-    expect(getAllByText('preferences.shortcuts.unassigned').length).toBe(1);
+    // Fork: the FreshRSS-style actions start without a key too.
+    const unassigned = Object.values(useUiStore.getState().shortcuts).filter((k) => !k).length;
+    expect(getAllByText('preferences.shortcuts.unassigned').length).toBe(unassigned);
     useUiStore.setState({ shortcuts: before });
     cleanup();
   });

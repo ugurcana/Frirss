@@ -6,7 +6,9 @@ import { createPortal } from 'react-dom';
 const store = vi.hoisted(() => ({
   selectedArticle: { id: 'a1', read: false, url: 'https://example.com/a' } as { id: string; read: boolean; url: string } | null,
   selectedFeed: null,
-  articles: [],
+  articles: [] as Array<{ id: string; read: boolean }>,
+  subscriptions: [],
+  unreadCounts: {},
   selectNextArticle: vi.fn(),
   selectPrevArticle: vi.fn(),
   selectArticle: vi.fn(),
@@ -70,7 +72,8 @@ describe('useKeyboardNav — the browser keeps its keys', () => {
   });
 
   it.each([
-    ['metaKey', 'r'], ['ctrlKey', 'r'], ['altKey', 'r'],
+    // Fork: Alt+r is FreshRSS's "mark the articles above read" (feedJumps).
+    ['metaKey', 'r'], ['ctrlKey', 'r'], ['altKey', 'd'],
     ['metaKey', 'l'], ['ctrlKey', 'd'], ['ctrlKey', 'b'], ['metaKey', 'o'], ['ctrlKey', 'u'], ['metaKey', 'f'],
   ])('leaves %s+%s to the browser', (mod, key) => {
     const listener = vi.fn();
@@ -87,9 +90,10 @@ describe('useKeyboardNav — the browser keeps its keys', () => {
     expect(useUiStore.getState().sidebarVisible).toBe(sidebarBefore);
   });
 
+  // Fork: Alt and Shift on a navigation key move between categories and feeds.
   it('leaves a modified arrow to the browser', () => {
-    const e = press({ key: 'ArrowDown', altKey: true });
-    expect(store.selectNextArticle).not.toHaveBeenCalled();
+    const e = press({ key: 'ArrowDown', ctrlKey: true });
+    expect(store.selectArticle).not.toHaveBeenCalled();
     expect(e.defaultPrevented).toBe(false);
   });
 
@@ -111,9 +115,11 @@ describe('useKeyboardNav — the browser keeps its keys', () => {
   });
 
   it('keeps moving through the list while an arrow is held', () => {
+    store.articles = [{ id: 'a1', read: false }, { id: 'a2', read: false }];
     press({ key: 'ArrowDown', repeat: true });
     press({ key: 'ArrowDown', repeat: true });
-    expect(store.selectNextArticle).toHaveBeenCalledTimes(2);
+    store.articles = [];
+    expect(store.selectArticle).toHaveBeenCalledTimes(2);
   });
 
   it('still opens the palette on ⌘K', () => {
@@ -158,13 +164,15 @@ describe('useKeyboardNav — sous une surface flottante', () => {
     const on = (e: Event) => { ai.push(e); };
     window.addEventListener('frirss:ai-summarize', on);
     window.addEventListener('frirss:ai-translate', on);
-    store.selectNextArticle.mockClear();
+    store.selectArticle.mockClear();
+    store.articles = [{ id: 'a1', read: false }, { id: 'a2', read: false }];
     press({ key: 'ArrowDown' });
     press({ key: 's' });
     press({ key: 't' });
     window.removeEventListener('frirss:ai-summarize', on);
     window.removeEventListener('frirss:ai-translate', on);
-    return { next: store.selectNextArticle.mock.calls.length, ai };
+    store.articles = [];
+    return { next: store.selectArticle.mock.calls.length, ai };
   }
 
   beforeEach(() => {

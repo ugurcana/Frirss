@@ -7,16 +7,16 @@ const shortcuts = {
 };
 
 describe('shortcutRefusal', () => {
-  it.each(['F1', 'F5', 'F12', 'Tab', ' ', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', '/', "'", '?'])(
+  it.each(['F1', 'F5', 'F12', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', '/', "'", '?'])(
     'refuses %j: the browser, the system or the help sheet owns it',
     (key) => {
       expect(shortcutRefusal(key, 'markRead', shortcuts)).toEqual({ reason: 'reserved' });
     },
   );
 
-  // Début, Fin, PgPréc, PgSuiv font défiler la page : seules les flèches sont
-  // exemptées de la règle (campagne 1.9.0, L-21).
-  it.each(['Home', 'End', 'PageUp', 'PageDown'])(
+  // PgPréc, PgSuiv font défiler la page. Fork: Space, Home and End are
+  // allowed, as in FreshRSS.
+  it.each(['PageUp', 'PageDown'])(
     'refuses %j: the browser scrolls the page with it',
     (key) => {
       expect(shortcutRefusal(key, 'markRead', shortcuts)).toEqual({ reason: 'reserved' });
@@ -31,7 +31,7 @@ describe('shortcutRefusal', () => {
     expect(shortcutRefusal('r', 'markRead', shortcuts)).toBeNull();
   });
 
-  it.each(['ArrowLeft', 'ArrowDown', 'x', 'F', 'Backspace'])('accepts %j', (key) => {
+  it.each(['ArrowLeft', 'ArrowDown', 'x', 'F', 'Backspace', ' ', 'Home', 'End'])('accepts %j', (key) => {
     const own = key === 'ArrowDown' ? 'nextArticle' : 'markRead';
     expect(shortcutRefusal(key, own, shortcuts)).toBeNull();
   });

@@ -7,8 +7,10 @@
  * PgPréc et PgSuiv (campagne 1.9.0).
  */
 const RESERVED_KEYS = new Set([
-  'Tab', ' ', 'Enter',
-  'Home', 'End', 'PageUp', 'PageDown',
+  // Fork: Space, Home and End are allowed (FreshRSS binds them by default). A
+  // bound key stops scrolling the page; an unbound one still scrolls.
+  'Tab', 'Enter',
+  'PageUp', 'PageDown',
   // Modificateurs pressés seuls : ils n'existent que pour être combinés.
   'Shift', 'Control', 'Alt', 'AltGraph', 'Meta', 'OS', 'Fn', 'CapsLock',
   // Recherche rapide de Firefox (texte, puis liens seulement).

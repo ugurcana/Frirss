@@ -107,6 +107,12 @@ const defaultShortcuts: Shortcuts = {
   readLater: 'l',
   summarize: 's',
   translate: 't',
+  // FreshRSS-style actions: no default key, bound in the preferences.
+  nextUnread: '',
+  firstArticle: '',
+  lastArticle: '',
+  toggleRead: '',
+  refresh: '',
 };
 
 /**
@@ -271,6 +277,9 @@ export interface UiState {
   // Synced per-user. Off → mark immediately.
   confirmMarkAllRead: boolean;
   setConfirmMarkAllRead: (v: boolean) => void;
+  /** FreshRSS `onread_jump_next`: after "Mark all as read" on a feed or a category, open the next one with unread articles. Synced. */
+  jumpNextAfterMarkAll: boolean;
+  setJumpNextAfterMarkAll: (v: boolean) => void;
   // Marquer un article lu quand il sort de l'écran par le haut. Éteint par
   // défaut : c'est une écriture déclenchée par un geste passif, personne ne
   // doit se la voir imposer par une mise à jour. Synchronisé.
@@ -712,6 +721,11 @@ export const useUiStore = create<UiState>()((set, get) => ({
   setConfirmMarkAllRead: (v) => {
     localStorage.setItem('frirss_confirmMarkAllRead', JSON.stringify(v));
     set({ confirmMarkAllRead: v });
+  },
+  jumpNextAfterMarkAll: loadJson('frirss_jumpNextAfterMarkAll', false),
+  setJumpNextAfterMarkAll: (v) => {
+    localStorage.setItem('frirss_jumpNextAfterMarkAll', JSON.stringify(v));
+    set({ jumpNextAfterMarkAll: v });
   },
 
   showListFavicons: loadJson('frirss_showListFavicons', true),
@@ -1327,7 +1341,7 @@ export const useUiStore = create<UiState>()((set, get) => ({
       'labelOrder', 'labelSortAlpha', 'showLabelCounts', 'showLabelUnread', 'showSpecialTotals', 'showSpecialUnread', 'showDateSeparators', 'gridDateSeparators',
       'showSourceInFeed', 'showSourceInAll', 'feedSettings', 'shortcuts',
       'labelsCollapsed', 'savedCollapsed', 'savedCategoryNames', 'collapsedLabelGroups', 'collapsedCategories', 'unreadOnlyByFeed', 'unreadOnlyScope', 'unreadOnlyAll', 'hideReadFeeds',
-      'confirmMarkAllRead', 'markReadOnScroll', 'showNewArticlesPill', 'showListFavicons', 'offlineImagePreset', 'inlineVideos', 'refreshHintDismissed',
+      'confirmMarkAllRead', 'jumpNextAfterMarkAll', 'markReadOnScroll', 'showNewArticlesPill', 'showListFavicons', 'offlineImagePreset', 'inlineVideos', 'refreshHintDismissed',
       'rowActions', 'toolbarVisibility', 'articleOrder', 'autoExtractDefault', 'startupView', 'aiPanelCollapsed', 'aiSummaryRatio',
       'gridCardWidth', 'gridImageRatio', 'gridCardFill',
       'randomCount', 'randomWindowAmount', 'randomWindowUnit', 'randomViews',
@@ -1406,7 +1420,7 @@ export const UI_SYNC_KEYS = [
   'showDateSeparators', 'gridDateSeparators', 'showSourceInFeed', 'showSourceInAll',
   'feedSettings', 'appTitle', 'appLogo', 'logoMode', 'shortcuts',
   'labelsCollapsed', 'savedCollapsed', 'savedCategoryNames', 'collapsedLabelGroups', 'collapsedCategories', 'unreadOnlyByFeed', 'unreadOnlyScope', 'unreadOnlyAll', 'hideReadFeeds',
-  'confirmMarkAllRead', 'markReadOnScroll', 'showNewArticlesPill', 'showListFavicons',
+  'confirmMarkAllRead', 'jumpNextAfterMarkAll', 'markReadOnScroll', 'showNewArticlesPill', 'showListFavicons',
   'offlineImagePreset', 'inlineVideos', 'refreshHintDismissed', 'rowActions', 'toolbarVisibility', 'articleOrder', 'autoExtractDefault', 'startupView',
   'aiPanelCollapsed', 'aiSummaryRatio', 'gridCardWidth', 'gridImageRatio', 'gridCardFill',
   'randomCount', 'randomWindowAmount', 'randomWindowUnit', 'randomViews',
@@ -1421,6 +1435,7 @@ export const shortcutActions = [
   'nextArticle', 'prevArticle', 'openArticle',
   'markRead', 'markUnread', 'toggleStar',
   'openOriginal', 'toggleSidebar', 'search', 'readLater', 'summarize', 'translate',
+  'nextUnread', 'firstArticle', 'lastArticle', 'toggleRead', 'refresh',
 ];
 
 // For the shortcut footer — only show contextual shortcuts
