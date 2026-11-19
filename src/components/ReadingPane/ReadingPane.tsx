@@ -4,6 +4,7 @@ import { isExtractableUrl, worthAutoExtracting } from '../../lib/extractFailures
 import { useTranslation } from 'react-i18next';
 import { keyLabel } from '../../lib/keyLabel';
 import { createPortal, flushSync } from 'react-dom';
+import { canTakeReaderFocus } from '../../lib/readerFocus';
 import { useFeedStore, READ_LATER_LABEL } from '../../stores/feedStore';
 import { useThemeStore } from '../../stores/themeStore';
 import { useUiStore } from '../../stores/uiStore';
@@ -502,6 +503,15 @@ export default function ReadingPane({ showBack }: ReadingPaneProps) {
 
   const breakpoint = useBreakpoint();
   const isMobileOrTablet = breakpoint !== 'desktop';
+
+  // Fork: the article that opens (j/k, a click in the list) takes the keyboard
+  // focus, so Space and Page Down scroll it at once, without a click in its
+  // body. Desktop only, and never away from a field, a dialog or a menu.
+  useEffect(() => {
+    if (!selectedArticle?.id || isMobileOrTablet) return;
+    const el = scrollContainerRef.current;
+    if (el && canTakeReaderFocus(document.activeElement)) el.focus({ preventScroll: true });
+  }, [selectedArticle?.id, isMobileOrTablet]);
 
   // ── Swipe left/right for next/prev article (mobile/tablet) ──────
   // 100% DOM-based — no React state for positions/animations to avoid conflicts
