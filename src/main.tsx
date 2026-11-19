@@ -7,6 +7,7 @@ import TopProgressBar from './components/TopProgressBar';
 import UpdatePrompt from './components/UpdatePrompt';
 import RefreshBanner from './components/RefreshBanner';
 import './styles/index.css';
+import './styles/readingFont.css';
 
 function render() {
   createRoot(document.getElementById('root')!).render(

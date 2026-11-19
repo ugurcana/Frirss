@@ -1,0 +1,26 @@
+/*
+ * Fork: Literata for the reading pane (article title and body), as in the
+ * owner's FreshRSS. Variable fonts: every weight, italics, optical sizes.
+ * Code blocks keep their monospace (`.article-content pre/code` is more specific).
+ */
+@font-face {
+  font-family: 'Literata';
+  src: url('../assets/fonts/Literata-Variable.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Literata';
+  src: url('../assets/fonts/Literata-Italic-Variable.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+[data-theme='reading-title'],
+.article-content {
+  font-family: 'Literata', Georgia, 'Times New Roman', serif;
+  font-optical-sizing: auto;
+}
