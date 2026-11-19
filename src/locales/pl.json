@@ -973,7 +973,7 @@
     "linkCopied": "Skopiowano link",
     "instapaperSaved": "Zapisano w Instapaper",
     "instapaperFailed": "Nie udało się zapisać w Instapaper. Spróbuj ponownie.",
-    "instapaperBadCredentials": "Instapaper odrzuca konto ustawione na serwerze (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
+    "instapaperBadCredentials": "Instapaper odrzuca token serwera. Utwórz nowy (scripts/instapaper-token.js).",
     "copyFailed": "Nie udało się skopiować linku",
     "loadMoreEmpty": "Załadowano kolejną stronę, wciąż nic do wyświetlenia.",
     "markFailed": "Serwer odmówił oznaczenia tego artykułu: wiersz został przywrócony.",

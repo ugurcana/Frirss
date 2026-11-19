@@ -929,7 +929,7 @@
     "linkCopied": "Link kopiert",
     "instapaperSaved": "In Instapaper gespeichert",
     "instapaperFailed": "Speichern in Instapaper fehlgeschlagen. Bitte erneut versuchen.",
-    "instapaperBadCredentials": "Instapaper lehnt das auf dem Server eingestellte Konto ab (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
+    "instapaperBadCredentials": "Instapaper lehnt das Token des Servers ab. Erstellen Sie ein neues (scripts/instapaper-token.js).",
     "copyFailed": "Link konnte nicht kopiert werden",
     "loadMoreEmpty": "Nächste Seite geladen, noch immer nichts anzuzeigen.",
     "markFailed": "Der Server hat das Markieren abgelehnt: Der Eintrag wurde wiederhergestellt.",

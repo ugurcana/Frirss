@@ -973,7 +973,7 @@
     "linkCopied": "Посилання скопійовано",
     "instapaperSaved": "Збережено в Instapaper",
     "instapaperFailed": "Не вдалося зберегти в Instapaper. Спробуйте ще раз.",
-    "instapaperBadCredentials": "Instapaper відхиляє обліковий запис, заданий на сервері (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
+    "instapaperBadCredentials": "Instapaper відхиляє токен сервера. Створіть новий (scripts/instapaper-token.js).",
     "copyFailed": "Не вдалося скопіювати посилання",
     "loadMoreEmpty": "Наступну сторінку завантажено, показувати поки нічого.",
     "markFailed": "Сервер відмовився позначити цю статтю: рядок повернено на місце.",

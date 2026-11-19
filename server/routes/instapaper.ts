@@ -1,25 +1,27 @@
 import { Router } from 'express';
 import { requireAuth } from '../middleware/auth.js';
+import { signedPost, type OAuthKeys } from '../instapaperOAuth.js';
 
 /**
- * Fork: "Save to Instapaper", through Instapaper's Simple API
- * (https://www.instapaper.com/api/simple): one authenticated POST, no OAuth
- * application keys. The account is the instance's, set by the operator:
+ * Fork: "Save to Instapaper", through Instapaper's Full API (OAuth 1.0a).
+ * The operator sets the application keys and an access token — no password:
  *
- *   INSTAPAPER_USERNAME=me@example.com
- *   INSTAPAPER_PASSWORD=…          (may be empty for an account without one)
+ *   INSTAPAPER_CONSUMER_KEY / INSTAPAPER_CONSUMER_SECRET   (the API application)
+ *   INSTAPAPER_TOKEN / INSTAPAPER_TOKEN_SECRET             (scripts/instapaper-token.js)
  *
- * The credentials never leave the server. Without INSTAPAPER_USERNAME the
- * feature is off and the app hides its button.
+ * The keys never leave the server. Without all four the feature is off and
+ * the app hides its button.
  */
 
-const ADD_URL = 'https://www.instapaper.com/api/add';
-const TIMEOUT_MS = 10_000;
-
-function credentials(): { username: string; password: string } | null {
-  const username = process.env.INSTAPAPER_USERNAME?.trim();
-  if (!username) return null;
-  return { username, password: process.env.INSTAPAPER_PASSWORD ?? '' };
+function keys(): Required<OAuthKeys> | null {
+  const e = process.env;
+  const k = {
+    consumerKey: e.INSTAPAPER_CONSUMER_KEY?.trim() ?? '',
+    consumerSecret: e.INSTAPAPER_CONSUMER_SECRET?.trim() ?? '',
+    token: e.INSTAPAPER_TOKEN?.trim() ?? '',
+    tokenSecret: e.INSTAPAPER_TOKEN_SECRET?.trim() ?? '',
+  };
+  return Object.values(k).every(Boolean) ? k : null;
 }
 
 /** Only web pages: Instapaper would refuse anything else, and nothing else is ours to send. */
@@ -36,31 +38,23 @@ function httpUrl(value: unknown): string | null {
 const router = Router();
 
 router.get('/status', requireAuth, (_req, res) => {
-  res.json({ enabled: credentials() !== null });
+  res.json({ enabled: keys() !== null });
 });
 
 router.post('/add', requireAuth, async (req, res) => {
-  const creds = credentials();
-  if (!creds) return res.status(404).json({ error: 'not_configured' });
+  const k = keys();
+  if (!k) return res.status(404).json({ error: 'not_configured' });
   const url = httpUrl(req.body?.url);
   if (!url) return res.status(400).json({ error: 'invalid_url' });
   const title = typeof req.body?.title === 'string' ? req.body.title.slice(0, 500) : '';
 
-  const form = new URLSearchParams({ url });
-  if (title) form.set('title', title);
+  const params: Record<string, string> = { url };
+  if (title) params.title = title;
   try {
-    const upstream = await fetch(ADD_URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${Buffer.from(`${creds.username}:${creds.password}`).toString('base64')}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: form.toString(),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    // 201 created; 400 bad request; 403 invalid username or password; 500 Instapaper error.
-    if (upstream.status === 201 || upstream.status === 200) return res.json({ ok: true });
-    if (upstream.status === 403) return res.status(502).json({ error: 'bad_credentials' });
+    const upstream = await signedPost('/bookmarks/add', params, k);
+    if (upstream.ok) return res.json({ ok: true });
+    // 401/403: the token was revoked or the keys are wrong.
+    if (upstream.status === 401 || upstream.status === 403) return res.status(502).json({ error: 'bad_credentials' });
     return res.status(502).json({ error: 'upstream', status: upstream.status });
   } catch {
     return res.status(504).json({ error: 'unreachable' });

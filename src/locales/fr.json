@@ -929,7 +929,7 @@
     "linkCopied": "Lien copié",
     "instapaperSaved": "Enregistré dans Instapaper",
     "instapaperFailed": "Impossible d’enregistrer dans Instapaper. Réessayez.",
-    "instapaperBadCredentials": "Instapaper refuse le compte réglé sur le serveur (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
+    "instapaperBadCredentials": "Instapaper refuse le jeton du serveur. Créez-en un nouveau (scripts/instapaper-token.js).",
     "copyFailed": "Impossible de copier le lien",
     "loadMoreEmpty": "Page suivante chargée, toujours rien à afficher.",
     "markFailed": "Le serveur a refusé de marquer cet article : sa ligne a été remise.",

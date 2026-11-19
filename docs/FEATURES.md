@@ -9987,7 +9987,7 @@ qu'un terme n'est pas déjà pris avant de le réutiliser.
 |---------|-------|------|
 | GET | `/api/health` | Santé : version, base, uptime (HEALTHCHECK du Dockerfile ; `server/index.ts`, hors `server/routes/`) |
 | GET | `/api/instapaper/status` | Fork : Instapaper est-il configuré sur le serveur ? (`{ enabled }`) |
-| POST | `/api/instapaper/add` | Fork : enregistrer une URL dans Instapaper (API simple, compte du serveur) |
+| POST | `/api/instapaper/add` | Fork : enregistrer une URL dans Instapaper (API complète, OAuth, jeton du serveur) |
 | POST | `/api/auth/register` | Créer un compte |
 | POST | `/api/auth/login` | Ouvrir une session |
 | POST | `/api/auth/logout` | Fermer la session |
@@ -10066,9 +10066,11 @@ fichiers statiques et `trust proxy`) · `PORT` (port interne d'Express, 3001) ·
 `CACHE_SYNC_INTERVAL` · `CACHE_SYNC_ACTIVE_DAYS` · `CACHE_SYNC_PARALLEL_USERS` ·
 `FRIRSS_REFRESH_MAX_FEEDS`
 
-**Instapaper (fork)** — `INSTAPAPER_USERNAME` · `INSTAPAPER_PASSWORD` : le
-compte Instapaper de l'instance. Sans `INSTAPAPER_USERNAME`, le bouton
-« Enregistrer dans Instapaper » reste masqué.
+**Instapaper (fork)** — `INSTAPAPER_CONSUMER_KEY` · `INSTAPAPER_CONSUMER_SECRET`
+(l'application de l'API) · `INSTAPAPER_TOKEN` · `INSTAPAPER_TOKEN_SECRET` (le
+jeton du compte, obtenu une fois par `scripts/instapaper-token.js` à partir de
+`INSTAPAPER_USERNAME` · `INSTAPAPER_PASSWORD`, que le serveur ne lit pas). Sans
+les quatre premières, le bouton « Enregistrer dans Instapaper » reste masqué.
 
 > `FRIRSS_DEV_VERSION` n'est pas un réglage d'exécution : elle est lue **à la
 > construction** par Vite (voir « Versions et livraison »).

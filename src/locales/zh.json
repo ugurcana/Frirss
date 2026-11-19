@@ -929,7 +929,7 @@
     "linkCopied": "链接已复制",
     "instapaperSaved": "已保存到 Instapaper",
     "instapaperFailed": "无法保存到 Instapaper，请重试。",
-    "instapaperBadCredentials": "Instapaper 拒绝了服务器上设置的账户（INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD）。",
+    "instapaperBadCredentials": "Instapaper 拒绝了服务器的令牌。请重新生成一个（scripts/instapaper-token.js）。",
     "copyFailed": "无法复制链接",
     "loadMoreEmpty": "下一页已加载，但仍无内容。",
     "markFailed": "服务器拒绝标记该文章，已重新放回列表。",

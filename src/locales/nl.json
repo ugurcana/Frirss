@@ -929,7 +929,7 @@
     "linkCopied": "Link gekopieerd",
     "instapaperSaved": "Opgeslagen in Instapaper",
     "instapaperFailed": "Opslaan in Instapaper mislukt. Probeer het opnieuw.",
-    "instapaperBadCredentials": "Instapaper weigert het account dat op de server is ingesteld (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
+    "instapaperBadCredentials": "Instapaper weigert het token van de server. Maak een nieuw token aan (scripts/instapaper-token.js).",
     "copyFailed": "Kon de link niet kopiëren",
     "loadMoreEmpty": "Volgende pagina geladen, nog steeds niets om te tonen.",
     "markFailed": "De server weigerde dit artikel te markeren: de rij is teruggezet.",

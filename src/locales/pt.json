@@ -929,7 +929,7 @@
     "linkCopied": "Ligação copiada",
     "instapaperSaved": "Guardado no Instapaper",
     "instapaperFailed": "Não foi possível guardar no Instapaper. Tente novamente.",
-    "instapaperBadCredentials": "O Instapaper recusa a conta definida no servidor (INSTAPAPER_USERNAME / INSTAPAPER_PASSWORD).",
+    "instapaperBadCredentials": "O Instapaper recusa o token do servidor. Crie um novo (scripts/instapaper-token.js).",
     "copyFailed": "Não foi possível copiar a ligação",
     "loadMoreEmpty": "Página seguinte carregada, ainda sem nada para mostrar.",
     "markFailed": "O servidor recusou marcar este artigo: a linha foi reposta.",
